@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'challenges'
 ]
 
 MIDDLEWARE = [
@@ -54,8 +56,11 @@ ROOT_URLCONF = 'monthly_challenges.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [
+            # BASE_DIR / 'challenges' /'templates'
+            BASE_DIR / 'templates'
+        ],
+        'APP_DIRS': True,  # app settings needs to be configured
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',

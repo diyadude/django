@@ -1,0 +1,36 @@
+ul {
+    list-style: none;
+    width: 90%;
+    max-width: 20rem;
+    margin: 2rem auto;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 35rem;
+    background-color: #e2dede;
+}
+
+li {
+    margin: 1rem 0;
+    text-align: center; 
+    font-size: 1.5rem;
+    border-bottom: 1px solid lightblue;
+    padding-bottom: 1rem;
+}
+li:last-of-type,
+li:nth-of-type(6) {
+    border-bottom: none;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+li a:hover,
+li a:active {
+    color: #956695;
+}

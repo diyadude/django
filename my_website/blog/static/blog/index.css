@@ -54,26 +54,6 @@
   gap: 1rem;
 }
 
-#latest-posts a {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-decoration: none;
-  color: black;
-}
-
-#latest-posts div {
-  margin: 0 auto;
-  text-align: center;
-  max-width: 16rem;
-}
-
-#latest-posts img {
-  width: 24rem;
-  margin: 0 auto;
-  border-radius: 12rem;
-}
-
 #latest-posts li {
   flex: 1;
 }

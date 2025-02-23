@@ -6,17 +6,11 @@
 {% endblock title %}
 
 {% block css_files %}
+    <link rel="stylesheet" href="{% static 'blog/post.css' %}">
     <link rel="stylesheet" href="{% static 'blog/index.css' %}">
 {% endblock css_files %}
 
 {% block content %}
-    <header id="main-navigation">
-        <h1><a href="#">Diya's Blog</a></h1>
-        <nav>
-            <a href="#">Home</a>
-        </nav>
-    </header>
-
     <section id="welcome">
         <header>
             <img src="{% static 'blog/images/Anne.jpg' %}" alt="Diya - The Author Of This Blog">
@@ -29,19 +23,7 @@
         <h2>My Latest Thoughts</h2>
 
         <ul>
-            <li>
-                <article class="post">
-                    <a href="#">
-                        <img src="{% static "blog/images/mountains.jpg" %}" alt="Mountain Hiking">
-                        <div class="post__content">
-                            <h3>Mountain Hiking</h3>
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus nesciunt soluta amet quas iusto quo. Explicabo tempore expedita totam distinctio.
-                            </p>
-                        </div>
-                    </a>
-                </article>
-            </li>
+            {% include "blog/partials/post.html" %}
         </ul>
     </section>
 

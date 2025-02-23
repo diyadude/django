@@ -15,12 +15,9 @@
         <h2>My Collocted posts</h2>
 
         <ul>
-            {% include "blog/partials/post.html" %}
-            {% include "blog/partials/post.html" %}
-            {% include "blog/partials/post.html" %}
-            {% include "blog/partials/post.html" %}
-            {% include "blog/partials/post.html" %}
-            {% include "blog/partials/post.html" %}
+            {% for post in posts %}
+                {% include "blog/partials/post.html" %}
+            {% endfor %}
         </ul>
     </section>
 {% endblock content %}

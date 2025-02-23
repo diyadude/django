@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Dummy Title
+{% endblock title %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'blog/single-post.css' %}">
+{% endblock css_files %}
+
+{% block content %}
+    <section id="summary">
+        <h2>Post Title</h2>
+        <article>
+            <img src="{% static "blog/images/mountains.jpg" %}" alt="Post Title">
+            <address>By Diya</address>
+            <div>
+                Last updated on <time>July 10th</time>
+            </div>
+        </article>
+    </section>
+
+    <main>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis, consectetur maxime consequuntur cumque quae harum laborum cum dolores voluptatibus fugit assumenda unde enim deserunt officia veritatis tempore rem perspiciatis quo!</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis, consectetur maxime consequuntur cumque quae harum laborum cum dolores voluptatibus fugit assumenda unde enim deserunt officia veritatis tempore rem perspiciatis quo!</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis, consectetur maxime consequuntur cumque quae harum laborum cum dolores voluptatibus fugit assumenda unde enim deserunt officia veritatis tempore rem perspiciatis quo!</p>
+    </main>
+{% endblock content %}

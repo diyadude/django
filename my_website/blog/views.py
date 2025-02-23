@@ -11,4 +11,4 @@ def posts(request):
 
 
 def single_post(request, slug):
-    pass
+    return render(request, 'blog/single-post.html')

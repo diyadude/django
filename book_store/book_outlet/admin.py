@@ -4,4 +4,12 @@ from .models import Book
 
 # Register your models here.
 
-admin.site.register(Book)
+class BookAdmin(admin.ModelAdmin):
+    # readonly_fields = ('slug',)
+    prepopulated_fields = {
+        "slug": ("title",)
+    }
+    list_filter = ('author', 'rating')
+    list_display = ('title', 'author', 'rating')
+
+admin.site.register(Book, BookAdmin)

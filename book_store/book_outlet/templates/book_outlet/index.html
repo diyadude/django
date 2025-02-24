@@ -6,6 +6,8 @@
 
 {% block content %}
   <ul>
-    <li>Book 1...</li>
+    {% for book in books %}
+        <li><a href="{% url 'book-detail' book.pk %}">Name: {{ book.title }}</a> --- Rating: {{ book.rating }}</li>
+    {% endfor %}
   </ul>
 {% endblock content %}

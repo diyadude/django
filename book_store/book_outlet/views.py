@@ -17,10 +17,11 @@ def index(request):
     return render(request, 'book_outlet/index.html', context)
 
 
-def book_detail(request, pk):
+def book_detail(request, slug):
     # book = get_object_or_404(Book, pk=pk)
     try:
-        book = Book.objects.get(id=pk)  # or .get(pk=variable)
+        # book = Book.objects.get(id=pk)  # or .get(pk=variable)
+        book = Book.objects.get(slug=slug)
     except Exception:
         raise Http404()
 

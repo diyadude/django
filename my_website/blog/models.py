@@ -14,7 +14,7 @@ class Author(models.Model):
         return f"{self.first_name} {self.last_name}"
 
     def __str__(self):
-        return self.full_name
+        return self.full_name()
 
 
 class Tag(models.Model):
@@ -34,9 +34,9 @@ class Post(models.Model):
     image_name = models.CharField(max_length=155)
     date = models.DateField()
     # db_index=True by default
-    slug = models.SlugField(default='', unique=True)  
+    slug = models.SlugField(default='', unique=True, blank=True)  
     content = models.TextField(validators=[MinLengthValidator(25)])
-    tag = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag)
 
     created = models.DateTimeField(auto_now_add=True)
     last_changed = models.DateTimeField(auto_now=True)

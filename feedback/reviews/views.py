@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
 
 from .forms import ReviewForm
 
@@ -9,7 +10,8 @@ def review(request):
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         if form.is_valid():
-            pass
+            print(form.cleaned_data)
+            return HttpResponseRedirect("/thank-you")
     else:
         form = ReviewForm()
     
@@ -17,3 +19,7 @@ def review(request):
         "form": form
     }
     return render(request, 'reviews/review.html', context)
+
+
+def thank_you(request):
+    return render(request, 'reviews/thank-you.html')

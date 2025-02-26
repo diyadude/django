@@ -1,11 +1,12 @@
-from django.shortcuts import render
-# from django.http import HttpResponseRedirect
+# from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from django.views import View
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DetailView
 # from django.views.generic.edit import FormView
 # from django.views.generic.edit import UpdateView, DeleteView
 from django.views.generic.edit import CreateView
+from django.urls import reverse
 
 from .forms import ReviewForm
 from .models import Review
@@ -84,6 +85,15 @@ class ReviewDetailView(DetailView):
     template_name = "reviews/review-detail.html"
     model = Review  # name in template: review, object
     # the key in url should be defined <int:pk> or slug
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        loaded_review = self.object
+        request = self.request
+        favorite_id = request.session.get('favorite_review')
+        context["is_favorite"] = favorite_id == str(loaded_review.id)
+
+        return context
 
 
 # def review(request):
@@ -114,3 +124,11 @@ class ReviewDetailView(DetailView):
 
 # def thank_you(request):
 #     return render(request, 'reviews/thank-you.html')
+
+
+class AddFavorateView(View):
+    def post(self, request):
+        review_id = request.POST['review_id']
+        request.session['favorite_review'] = review_id
+        
+        return HttpResponseRedirect(reverse('review-detail', args=[review_id]))

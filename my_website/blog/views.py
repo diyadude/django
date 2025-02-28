@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
+from django.views.generic import DetailView, ListView
 
 from .models import Post
 
@@ -21,18 +22,13 @@ def index(request):
     return render(request, 'blog/index.html', context)
 
 
-def posts(request):
-    posts_data = Post.objects.all().order_by('-date')
-    context = {
-        "posts": posts_data
-    }
-    return render(request, 'blog/all-posts.html', context)
+class Posts(ListView):
+    template_name = "blog/all-posts.html"
+    model = Post
+    ordering = ['-date']
+    context_object_name = "posts"
 
 
-def single_post(request, slug):
-    post = get_object_or_404(Post, slug=slug)
-    context = {
-        "post": post,
-        "tags": post.tags.all()
-    }
-    return render(request, 'blog/single-post.html', context)
+class SinglePost(DetailView):
+    template_name = "blog/single-post.html"
+    model = Post

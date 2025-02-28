@@ -67,3 +67,8 @@ class SinglePost(View):
             "comments": comments
         }
         return render(request, "blog/single-post.html", context)
+
+
+class ReadLaterView(View):
+    def post(self, request):
+        pass

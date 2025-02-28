@@ -71,4 +71,14 @@ class SinglePost(View):
 
 class ReadLaterView(View):
     def post(self, request):
-        pass
+        stored_posts = request.session.get('stored_post')
+        
+        if not stored_posts:
+            stored_posts = []
+        
+        post_id = int(request.POST['post_id'])
+        
+        if post_id not in stored_posts:
+            stored_posts.append(post_id)
+        
+        return HttpResponseRedirect("/")

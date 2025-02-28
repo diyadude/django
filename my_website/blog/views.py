@@ -39,15 +39,18 @@ class SinglePost(View):
     
     def get(self, request, slug):
         post = Post.objects.get(slug=slug)
+        comments = post.comments.all().order_by("-id")
         context = {
             "post": post,
-            "form": CommentForm()
+            "form": CommentForm(),
+            "comments": comments
         }
         return render(request, "blog/single-post.html", context)
     
     def post(self, request, slug):
         form = CommentForm(request.POST)
         post = Post.objects.get(slug=slug)
+        comments = post.comments.all().order_by("-id")
         
         if form.is_valid():
             comment = form.save(commit=False)
@@ -60,6 +63,7 @@ class SinglePost(View):
         
         context = {
             "post": post,
-            "form": form
+            "form": form,
+            "comments": comments
         }
         return render(request, "blog/single-post.html", context)

@@ -1,7 +1,11 @@
 from django.shortcuts import render
-from django.views.generic import DetailView, ListView
+from django.views.generic import ListView
+from django.views import View
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
-from .models import Post
+from .models import Post, Comment
+from .forms import CommentForm
 
 
 def get_date(post):
@@ -29,6 +33,47 @@ class Posts(ListView):
     context_object_name = "posts"
 
 
-class SinglePost(DetailView):
+class SinglePost(View):
     template_name = "blog/single-post.html"
     model = Post
+    
+    def get(self, request, slug):
+        post = Post.objects.get(slug=slug)
+        context = {
+            "post": post,
+            "form": CommentForm()
+        }
+        return render(request, "blog/single-post.html", context)
+    
+    def post(self, request, slug):
+        form = CommentForm(request.POST)
+        post = Post.objects.get(slug=slug)
+        
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            
+            return HttpResponseRedirect(
+                reverse('blog-single-post', args=[slug])
+            )
+        
+        context = {
+            "post": post,
+            "form": form
+        }
+        return render(request, "blog/single-post.html", context)
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['tags'] = self.object.tags.all()
+    #     context['form'] = CommentForm()
+    #     return context
+    
+
+
+# class CreateComment(CreateView):
+#     model = Comment
+#     form_class = CommentForm
+#     template_name = "blog/single-post.html"
+#     success_url = "/"
+#     context_object_name = "form"

@@ -31,7 +31,7 @@ class Post(models.Model):
         null=True, related_name='post')
     title = models.CharField(max_length=155)
     excerpt = models.CharField(max_length=255)
-    image_name = models.CharField(max_length=155)
+    image = models.ImageField(upload_to='posts', null=True)
     date = models.DateField()
     # db_index=True by default
     slug = models.SlugField(default='', unique=True, blank=True)  

@@ -4,7 +4,7 @@ from django.views import View
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from .models import Post, Comment
+from .models import Post
 from .forms import CommentForm
 
 
@@ -63,17 +63,3 @@ class SinglePost(View):
             "form": form
         }
         return render(request, "blog/single-post.html", context)
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['tags'] = self.object.tags.all()
-    #     context['form'] = CommentForm()
-    #     return context
-    
-
-
-# class CreateComment(CreateView):
-#     model = Comment
-#     form_class = CommentForm
-#     template_name = "blog/single-post.html"
-#     success_url = "/"
-#     context_object_name = "form"

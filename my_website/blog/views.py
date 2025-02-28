@@ -37,13 +37,20 @@ class SinglePost(View):
     template_name = "blog/single-post.html"
     model = Post
     
+    def is_stored_post(self, request, post_id):
+        stored_posts = request.session.get('stored_posts')
+        read_later_status = post_id in stored_posts
+        
+        return read_later_status
+    
     def get(self, request, slug):
         post = Post.objects.get(slug=slug)
         comments = post.comments.all().order_by("-id")
         context = {
             "post": post,
             "form": CommentForm(),
-            "comments": comments
+            "comments": comments,
+            "saved_for_later": self.is_stored_post(request, post.id)
         }
         return render(request, "blog/single-post.html", context)
     
@@ -64,7 +71,8 @@ class SinglePost(View):
         context = {
             "post": post,
             "form": form,
-            "comments": comments
+            "comments": comments,
+            "saved_for_later": self.is_stored_post(request, post.id)
         }
         return render(request, "blog/single-post.html", context)
 
@@ -99,6 +107,10 @@ class ReadLaterView(View):
         
         if post_id not in stored_posts:
             stored_posts.append(post_id)
-            request.session['stored_posts'] = stored_posts
+        else:
+            stored_posts.remove(post_id)
         
-        return HttpResponseRedirect("/")
+        request.session['stored_posts'] = stored_posts
+        post_slug = Post.objects.get(id=post_id).slug
+        
+        return HttpResponseRedirect(reverse("blog-single-post", args=[post_slug]))

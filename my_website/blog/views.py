@@ -70,8 +70,27 @@ class SinglePost(View):
 
 
 class ReadLaterView(View):
+    def get(self, request):
+        stored_posts = request.session.get('stored_posts')
+        print(stored_posts)
+        
+        context = {}
+        
+        if not stored_posts:
+            context['posts'] = []
+            context['has_posts'] = False
+        else:
+            posts = Post.objects.filter(id__in=stored_posts)
+            # posts = []
+            # for post_id in stored_posts:
+            #     posts.append(Post.objects.filter(id=post_id))
+            context['posts'] = posts
+            context['has_posts'] = True
+        print(context)
+        return render(request, 'blog/stored-posts.html', context)
+        
     def post(self, request):
-        stored_posts = request.session.get('stored_post')
+        stored_posts = request.session.get('stored_posts')
         
         if not stored_posts:
             stored_posts = []
@@ -80,5 +99,6 @@ class ReadLaterView(View):
         
         if post_id not in stored_posts:
             stored_posts.append(post_id)
+            request.session['stored_posts'] = stored_posts
         
         return HttpResponseRedirect("/")
